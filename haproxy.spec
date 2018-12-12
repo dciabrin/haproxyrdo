@@ -8,7 +8,7 @@
 
 Name:           haproxy
 Version:        1.8.14
-Release:        2%{?dist}
+Release:        2%{?dist}.0.0.rdo0
 Summary:        HAProxy reverse proxy for high availability environments
 
 Group:          System Environment/Daemons
@@ -25,7 +25,7 @@ Source5:        halog.1
 Patch0: 0001-BUG-MEDIUM-auth-threads-use-of-crypt-not-thread-safe.patch
 
 BuildRequires:  gcc
-BuildRequires:  lua-devel
+#BuildRequires:  lua-devel
 BuildRequires:  pcre-devel
 BuildRequires:  zlib-devel
 BuildRequires:  openssl-devel
@@ -61,7 +61,7 @@ regparm_opts=
 regparm_opts="USE_REGPARM=1"
 %endif
 
-%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_LUA=1 USE_CRYPT_H=1 USE_SYSTEMD=1 USE_LINUX_TPROXY=1 USE_GETADDRINFO=1 ${regparm_opts} ADDINC="%{optflags}" ADDLIB="%{__global_ldflags}"
+%{__make} %{?_smp_mflags} CPU="generic" TARGET="linux2628" USE_OPENSSL=1 USE_PCRE=1 USE_ZLIB=1 USE_CRYPT_H=1 USE_SYSTEMD=1 USE_LINUX_TPROXY=1 USE_GETADDRINFO=1 ${regparm_opts} ADDINC="%{optflags}" ADDLIB="%{__global_ldflags}"
 
 pushd contrib/halog
 %{__make} ${halog} OPTIMIZE="%{optflags} %{build_ldflags}"
@@ -138,6 +138,9 @@ exit 0
 %{_mandir}/man1/*
 
 %changelog
+* Wed Dec 12 2018 Damien Ciabrini <dciabrin@redhat.com> - 1.8.14-2.0.0.rdo0
+- Align RDO to Fedora version, without Lua support
+
 * Sat Dec 01 2018 Ryan O'Hara <rohara@redhat.com> - 1.8.14-2
 - Use of crpyt() is not thread safe (#1643941)
 
